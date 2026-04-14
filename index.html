@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+
+<h1>Task Manager</h1>
+
+<div class="top">
+  <input id="t" placeholder="Enter task">
+  <input id="dt" type="datetime-local">
+  <button onclick="add()">Add Task</button>
+  <button onclick="clearDone()">Clear Completed</button>
+  <button onclick="mode()">Mode</button>
+</div>
+
+<div class="grid">
+
+  <div class="box" ondrop="drop(event,'iu')" ondragover="allow(event)">
+    <h2>Important & Urgent</h2>
+    <div id="iu"></div>
+  </div>
+
+  <div class="box" ondrop="drop(event,'inu')" ondragover="allow(event)">
+    <h2>Important & Not Urgent</h2>
+    <div id="inu"></div>
+  </div>
+
+  <div class="box" ondrop="drop(event,'niu')" ondragover="allow(event)">
+    <h2>Not Important & Urgent</h2>
+    <div id="niu"></div>
+  </div>
+
+  <div class="box" ondrop="drop(event,'ninu')" ondragover="allow(event)">
+    <h2>Not Important & Not Urgent</h2>
+    <div id="ninu"></div>
+  </div>
+
+  <div class="box" ondrop="drop(event,'inbox')" ondragover="allow(event)">
+    <h2>Inbox</h2>
+    <div id="inbox"></div>
+  </div>
+
+  <div class="box" ondrop="drop(event,'done')" ondragover="allow(event)">
+    <h2>Completed</h2>
+    <div id="done"></div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
