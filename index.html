@@ -1,56 +1,267 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-  <title>Task Manager</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager Luxe APK Download | Premium Priority Planner</title>
+  <meta name="description" content="Download Task Manager Luxe, a premium Eisenhower matrix planner with deadline tracking, drag-and-drop prioritization, and a polished command-center design.">
+  <meta name="keywords" content="task manager apk, task manager luxe, priority planner apk, eisenhower matrix app, productivity app download">
+  <meta name="theme-color" content="#f1c27d">
+  <meta name="application-name" content="Task Manager Luxe">
+  <meta property="og:title" content="Task Manager Luxe APK Download">
+  <meta property="og:description" content="Premium task planning with an elegant dashboard, matrix prioritization, and Android APK download.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/task-manager-luxe-icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Task Manager Luxe",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Android, Web",
+      "description": "A premium task-planning dashboard with matrix prioritization, deadline tracking, and downloadable Android APK.",
+      "downloadUrl": "downloads/task-manager-luxe.apk"
+    }
+  </script>
 </head>
-<body class="dark">
-
-<h1>Task Manager</h1>
-
-<div class="top">
-  <input id="t" placeholder="Enter task">
-  <input id="dt" type="datetime-local">
-  <button onclick="add()">Add Task</button>
-  <button onclick="clearDone()">Clear Completed</button>
-  <button onclick="mode()">Mode</button>
-</div>
-
-<div class="grid">
-
-  <div class="box" ondrop="drop(event,'iu')" ondragover="allow(event)">
-    <h2>Important & Urgent</h2>
-    <div id="iu"></div>
+<body class="theme-dark">
+  <div id="splash" class="splash-screen">
+    <div class="splash-card">
+      <img class="splash-logo" src="assets/task-manager-luxe-icon.svg" alt="Task Manager Luxe logo">
+      <p class="splash-eyebrow">Task Manager Luxe</p>
+      <h1 class="splash-title">Elegant planning with a richer visual identity.</h1>
+      <div class="splash-loader"><span></span></div>
+    </div>
   </div>
 
-  <div class="box" ondrop="drop(event,'inu')" ondragover="allow(event)">
-    <h2>Important & Not Urgent</h2>
-    <div id="inu"></div>
+  <div class="app-shell">
+    <div class="noise"></div>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <header class="hero">
+      <section class="hero-lead reveal reveal-up">
+        <div class="brand-row">
+          <div class="brand-mark">
+            <img src="assets/task-manager-luxe-icon.svg" alt="Task Manager Luxe mark">
+          </div>
+          <div class="brand-copy">
+            <p class="eyebrow">Task Manager Luxe</p>
+            <span class="brand-note">Priority planning, styled like a premium product.</span>
+          </div>
+        </div>
+
+        <h2 class="hero-title">A classy task manager with color, atmosphere, and a real product feel.</h2>
+        <p class="hero-text">
+          Built around the Eisenhower matrix, redesigned with warmer tones, richer contrast, smoother motion, and a branded Android download experience.
+        </p>
+
+        <div class="hero-actions">
+          <button id="addBtn" class="primary-button" type="button">Add Task</button>
+          <a class="download-button" href="downloads/task-manager-luxe.apk" download="task-manager-luxe.apk">Download APK</a>
+          <button id="themeToggle" class="ghost-button" type="button">Light Mode</button>
+        </div>
+
+        <div class="hero-metrics">
+          <article class="metric-card">
+            <span class="metric-label">Active</span>
+            <strong id="activeCount">0</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Due Today</span>
+            <strong id="todayCount">0</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Overdue</span>
+            <strong id="overdueCount">0</strong>
+          </article>
+        </div>
+      </section>
+
+      <aside class="hero-aside glass-card reveal reveal-delay">
+        <div class="aside-topline">
+          <div>
+            <p class="section-kicker">Live Snapshot</p>
+            <h2 id="todayLabel">Today</h2>
+          </div>
+          <span class="done-badge"><span id="doneCount">0</span> done</span>
+        </div>
+
+        <div class="focus-card">
+          <p class="focus-label">Luxury Direction</p>
+          <p class="focus-copy">Plum, champagne, coral, jade, and velvet neutrals replace the old flat blue look for something more expensive and memorable.</p>
+        </div>
+
+        <div class="signal-list">
+          <div class="signal-item">
+            <span class="signal-dot rose"></span>
+            <div>
+              <strong>Elegant urgency</strong>
+              <p>Important work should look elevated, not basic.</p>
+            </div>
+          </div>
+          <div class="signal-item">
+            <span class="signal-dot gold"></span>
+            <div>
+              <strong>Searchable download</strong>
+              <p>The site now exposes a proper APK link with a project-related name for browser downloads.</p>
+            </div>
+          </div>
+          <div class="signal-item">
+            <span class="signal-dot jade"></span>
+            <div>
+              <strong>Product polish</strong>
+              <p>Branded splash, custom iconography, stronger palette, and smoother entry animations.</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <main class="workspace">
+      <section class="composer glass-card reveal reveal-up">
+        <div class="composer-heading">
+          <div>
+            <p class="section-kicker">Quick Capture</p>
+            <h2>Compose a task with intent</h2>
+          </div>
+          <button id="clearDoneBtn" class="ghost-button" type="button">Clear Completed</button>
+        </div>
+
+        <div class="composer-grid">
+          <label class="field field-wide">
+            <span>Task title</span>
+            <input id="taskInput" type="text" placeholder="What deserves attention next?">
+          </label>
+
+          <label class="field">
+            <span>Deadline</span>
+            <input id="deadlineInput" type="datetime-local">
+          </label>
+
+          <label class="field">
+            <span>Destination</span>
+            <select id="boxInput">
+              <option value="inbox">Inbox</option>
+              <option value="iu">Important & Urgent</option>
+              <option value="inu">Important & Not Urgent</option>
+              <option value="niu">Not Important & Urgent</option>
+              <option value="ninu">Not Important & Not Urgent</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="toolbar reveal reveal-up">
+        <div class="filter-group glass-pill">
+          <button class="filter-chip active" data-filter="all" type="button">All</button>
+          <button class="filter-chip" data-filter="today" type="button">Today</button>
+          <button class="filter-chip" data-filter="upcoming" type="button">Upcoming</button>
+          <button class="filter-chip" data-filter="overdue" type="button">Overdue</button>
+        </div>
+
+        <label class="search-box glass-pill">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="Find a task">
+        </label>
+      </section>
+
+      <section class="download-panel glass-card reveal reveal-up">
+        <div>
+          <p class="section-kicker">APK Access</p>
+          <h2>Download Task Manager Luxe on any browser</h2>
+          <p class="download-copy">
+            Once this site is hosted, the APK link below works from any browser and any device that can access the page. The file name is project-related, clean, and ready to publish.
+          </p>
+        </div>
+        <div class="download-actions">
+          <a class="download-button large" href="downloads/task-manager-luxe.apk" download="task-manager-luxe.apk">Download `task-manager-luxe.apk`</a>
+          <span class="download-hint">Ideal for GitHub Pages, Netlify, Vercel static hosting, or any direct file host.</span>
+        </div>
+      </section>
+
+      <section class="board reveal reveal-up">
+        <article class="matrix-card glass-card accent-rose" data-box="iu">
+          <div class="lane-ribbon"></div>
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Immediate Heat</p>
+              <h3>Important & Urgent</h3>
+            </div>
+            <span class="count-pill" id="count-iu">0</span>
+          </div>
+          <div class="task-lane" id="iu"></div>
+        </article>
+
+        <article class="matrix-card glass-card accent-gold" data-box="inu">
+          <div class="lane-ribbon"></div>
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Strategic Depth</p>
+              <h3>Important & Not Urgent</h3>
+            </div>
+            <span class="count-pill" id="count-inu">0</span>
+          </div>
+          <div class="task-lane" id="inu"></div>
+        </article>
+
+        <article class="matrix-card glass-card accent-cyan" data-box="niu">
+          <div class="lane-ribbon"></div>
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Fast Triage</p>
+              <h3>Not Important & Urgent</h3>
+            </div>
+            <span class="count-pill" id="count-niu">0</span>
+          </div>
+          <div class="task-lane" id="niu"></div>
+        </article>
+
+        <article class="matrix-card glass-card accent-slate" data-box="ninu">
+          <div class="lane-ribbon"></div>
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Low Leverage</p>
+              <h3>Not Important & Not Urgent</h3>
+            </div>
+            <span class="count-pill" id="count-ninu">0</span>
+          </div>
+          <div class="task-lane" id="ninu"></div>
+        </article>
+
+        <article class="matrix-card glass-card accent-indigo" data-box="inbox">
+          <div class="lane-ribbon"></div>
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Capture Layer</p>
+              <h3>Inbox</h3>
+            </div>
+            <span class="count-pill" id="count-inbox">0</span>
+          </div>
+          <div class="task-lane" id="inbox"></div>
+        </article>
+
+        <article class="matrix-card glass-card accent-emerald" data-box="done">
+          <div class="lane-ribbon"></div>
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Momentum Archive</p>
+              <h3>Completed</h3>
+            </div>
+            <span class="count-pill" id="count-done">0</span>
+          </div>
+          <div class="task-lane" id="done"></div>
+        </article>
+      </section>
+    </main>
   </div>
 
-  <div class="box" ondrop="drop(event,'niu')" ondragover="allow(event)">
-    <h2>Not Important & Urgent</h2>
-    <div id="niu"></div>
-  </div>
+  <div id="menu" class="task-menu hidden"></div>
+  <div id="notify" class="notify-stack"></div>
 
-  <div class="box" ondrop="drop(event,'ninu')" ondragover="allow(event)">
-    <h2>Not Important & Not Urgent</h2>
-    <div id="ninu"></div>
-  </div>
-
-  <div class="box" ondrop="drop(event,'inbox')" ondragover="allow(event)">
-    <h2>Inbox</h2>
-    <div id="inbox"></div>
-  </div>
-
-  <div class="box" ondrop="drop(event,'done')" ondragover="allow(event)">
-    <h2>Completed</h2>
-    <div id="done"></div>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

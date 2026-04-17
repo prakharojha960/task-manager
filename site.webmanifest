@@ -1,0 +1,17 @@
+{
+  "name": "Task Manager Luxe",
+  "short_name": "TMLuxe",
+  "description": "Premium priority planning with matrix workflows, deadline tracking, and APK download.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#130d16",
+  "theme_color": "#f1c27d",
+  "icons": [
+    {
+      "src": "assets/task-manager-luxe-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
