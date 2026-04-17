@@ -18,6 +18,12 @@ const els = {
   splash: document.getElementById("splash"),
   notify: document.getElementById("notify"),
   menu: document.getElementById("menu"),
+  mobileDateLabel: document.getElementById("mobileDateLabel"),
+  mobileBackdrop: document.getElementById("mobileBackdrop"),
+  mobileSheet: document.getElementById("mobileSheet"),
+  menuToggle: document.getElementById("menuToggle"),
+  menuClose: document.getElementById("menuClose"),
+  sheetThemeToggle: document.getElementById("sheetThemeToggle"),
   taskInput: document.getElementById("taskInput"),
   deadlineInput: document.getElementById("deadlineInput"),
   boxInput: document.getElementById("boxInput"),
@@ -122,11 +128,15 @@ function getVisibleTasks() {
 }
 
 function updateHeader() {
-  els.todayLabel.textContent = new Date().toLocaleDateString([], {
+  const formatted = new Date().toLocaleDateString([], {
     weekday: "long",
     month: "long",
     day: "numeric"
   });
+  els.todayLabel.textContent = formatted;
+  if (els.mobileDateLabel) {
+    els.mobileDateLabel.textContent = formatted;
+  }
 
   const active = tasks.filter((task) => !task.done).length;
   const dueToday = tasks.filter((task) => !task.done && task.deadline && isSameDay(task.deadline, Date.now())).length;
@@ -477,6 +487,20 @@ function hideMenu() {
   els.menu.classList.add("hidden");
 }
 
+function scrollToSection(sectionId) {
+  const target = document.getElementById(sectionId);
+  if (!target) return;
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function openMobileMenu() {
+  els.body.classList.add("mobile-menu-open");
+}
+
+function closeMobileMenu() {
+  els.body.classList.remove("mobile-menu-open");
+}
+
 function clearCompleted() {
   const doneCount = tasks.filter((task) => task.done).length;
   tasks = tasks.filter((task) => !task.done);
@@ -538,6 +562,9 @@ function toggleTheme() {
   els.body.classList.toggle("theme-dark");
   const isLight = els.body.classList.contains("theme-light");
   els.themeToggle.textContent = isLight ? "Dark Mode" : "Light Mode";
+  if (els.sheetThemeToggle) {
+    els.sheetThemeToggle.textContent = isLight ? "Switch to Dark Mode" : "Switch to Light Mode";
+  }
   localStorage.setItem("theme", isLight ? "light" : "dark");
 }
 
@@ -547,6 +574,10 @@ function loadTheme() {
     els.body.classList.remove("theme-dark");
     els.body.classList.add("theme-light");
     els.themeToggle.textContent = "Dark Mode";
+  }
+  if (els.sheetThemeToggle) {
+    const isLight = els.body.classList.contains("theme-light");
+    els.sheetThemeToggle.textContent = isLight ? "Switch to Dark Mode" : "Switch to Light Mode";
   }
 }
 
@@ -570,6 +601,13 @@ function tick() {
 els.addBtn.addEventListener("click", addTask);
 els.clearDoneBtn.addEventListener("click", clearCompleted);
 els.themeToggle.addEventListener("click", toggleTheme);
+els.sheetThemeToggle?.addEventListener("click", () => {
+  toggleTheme();
+  closeMobileMenu();
+});
+els.menuToggle?.addEventListener("click", openMobileMenu);
+els.menuClose?.addEventListener("click", closeMobileMenu);
+els.mobileBackdrop?.addEventListener("click", closeMobileMenu);
 els.searchInput.addEventListener("input", (event) => {
   searchTerm = event.target.value.trim().toLowerCase();
   render();
@@ -585,6 +623,13 @@ els.deadlineInput.addEventListener("keydown", (event) => {
 
 document.querySelectorAll(".filter-chip").forEach((chip) => {
   chip.addEventListener("click", () => setFilter(chip.dataset.filter));
+});
+
+document.querySelectorAll("[data-scroll-target]").forEach((button) => {
+  button.addEventListener("click", () => {
+    scrollToSection(button.dataset.scrollTarget);
+    closeMobileMenu();
+  });
 });
 
 document.addEventListener("click", (event) => {
