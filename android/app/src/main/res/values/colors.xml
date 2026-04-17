@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand_bg">#1B101E</color>
+    <color name="brand_top">#311737</color>
+    <color name="brand_champagne">#F1C27D</color>
+    <color name="brand_coral">#F2897D</color>
+    <color name="brand_jade">#71D0AE</color>
+    <color name="brand_iris">#B79CF7</color>
+</resources>
