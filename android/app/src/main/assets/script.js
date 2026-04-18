@@ -12,6 +12,8 @@ let currentFilter = "all";
 let searchTerm = "";
 let dragTaskId = null;
 let openMenuId = null;
+let activeScreen = "home";
+const isAppRuntime = window.location.protocol === "file:";
 
 const els = {
   body: document.body,
@@ -24,6 +26,7 @@ const els = {
   menuToggle: document.getElementById("menuToggle"),
   menuClose: document.getElementById("menuClose"),
   sheetThemeToggle: document.getElementById("sheetThemeToggle"),
+  downloadCtas: document.querySelectorAll(".download-cta"),
   taskInput: document.getElementById("taskInput"),
   deadlineInput: document.getElementById("deadlineInput"),
   boxInput: document.getElementById("boxInput"),
@@ -501,6 +504,32 @@ function closeMobileMenu() {
   els.body.classList.remove("mobile-menu-open");
 }
 
+function setActiveScreen(screen) {
+  activeScreen = screen;
+
+  document.querySelectorAll(".app-screen").forEach((section) => {
+    section.classList.toggle("active-screen", section.dataset.screen === screen);
+  });
+
+  document.querySelectorAll(".mobile-nav-item[data-screen], .sheet-action[data-screen]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.screen === screen);
+  });
+}
+
+function applyRuntimeMode() {
+  if (!isAppRuntime) return;
+
+  els.body.classList.add("app-runtime");
+  els.downloadCtas.forEach((link) => {
+    link.setAttribute("hidden", "hidden");
+  });
+
+  const downloadSection = document.getElementById("downloadSection");
+  if (downloadSection) {
+    downloadSection.setAttribute("hidden", "hidden");
+  }
+}
+
 function clearCompleted() {
   const doneCount = tasks.filter((task) => task.done).length;
   tasks = tasks.filter((task) => !task.done);
@@ -632,6 +661,17 @@ document.querySelectorAll("[data-scroll-target]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-screen]").forEach((button) => {
+  button.addEventListener("click", () => {
+    setActiveScreen(button.dataset.screen);
+    closeMobileMenu();
+
+    if (window.matchMedia("(max-width: 720px)").matches) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+});
+
 document.addEventListener("click", (event) => {
   if (!els.menu.contains(event.target) && !event.target.classList.contains("icon-button")) {
     hideMenu();
@@ -642,6 +682,8 @@ window.addEventListener("scroll", hideMenu);
 
 bindLanes();
 loadTheme();
+applyRuntimeMode();
+setActiveScreen("home");
 render();
 checkAlerts();
 revealExperience();

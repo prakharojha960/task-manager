@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Manager Luxe APK Download | Premium Priority Planner</title>
-  <meta name="description" content="Download Task Manager Luxe, a premium Eisenhower matrix planner with deadline tracking, drag-and-drop prioritization, and a polished command-center design.">
-  <meta name="keywords" content="task manager apk, task manager luxe, priority planner apk, eisenhower matrix app, productivity app download">
+  <title>Task Manager APK Download | Priority Planner</title>
+  <meta name="description" content="Download Task Manager, an Eisenhower matrix planner with deadline tracking, drag-and-drop prioritization, and a polished mobile-first dashboard.">
+  <meta name="keywords" content="task manager apk, task manager, priority planner apk, eisenhower matrix app, productivity app download">
   <meta name="theme-color" content="#f1c27d">
-  <meta name="application-name" content="Task Manager Luxe">
-  <meta property="og:title" content="Task Manager Luxe APK Download">
-  <meta property="og:description" content="Premium task planning with an elegant dashboard, matrix prioritization, and Android APK download.">
+  <meta name="application-name" content="Task Manager">
+  <meta property="og:title" content="Task Manager APK Download">
+  <meta property="og:description" content="Task planning with an elegant dashboard, matrix prioritization, and Android APK download.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/task-manager-luxe-icon.svg" type="image/svg+xml">
   <link rel="manifest" href="site.webmanifest">
@@ -18,22 +18,22 @@
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "Task Manager Luxe",
+      "name": "Task Manager",
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "Android, Web",
-      "description": "A premium task-planning dashboard with matrix prioritization, deadline tracking, and downloadable Android APK.",
-      "downloadUrl": "downloads/task-manager-luxe.apk"
+      "description": "A task-planning dashboard with matrix prioritization, deadline tracking, and downloadable Android APK.",
+      "downloadUrl": "downloads/task-manager.apk"
     }
   </script>
 </head>
 <body class="theme-dark">
-  <a class="floating-download" href="downloads/task-manager-luxe.apk" download="task-manager-luxe.apk">Download APK</a>
+  <a class="floating-download download-cta" href="downloads/task-manager.apk" download="task-manager.apk">Download APK</a>
   <div id="splash" class="splash-screen">
     <div class="splash-card">
       <div class="brand-mark splash-brand-mark" aria-hidden="true">
-        <span class="brand-glyph">TL</span>
+        <span class="brand-glyph">TM</span>
       </div>
-      <p class="splash-eyebrow">Task Manager Luxe</p>
+      <p class="splash-eyebrow">Task Manager</p>
       <h1 class="splash-title">Plan beautifully. Focus clearly.</h1>
       <div class="splash-loader"><span></span></div>
     </div>
@@ -44,10 +44,10 @@
     <header class="mobile-topbar">
       <div class="mobile-brand">
         <div class="brand-mark mobile-brand-mark" aria-hidden="true">
-          <span class="brand-glyph">TL</span>
+          <span class="brand-glyph">TM</span>
         </div>
         <div>
-          <strong>Task Manager Luxe</strong>
+          <strong>Task Manager</strong>
           <span id="mobileDateLabel">Today</span>
         </div>
       </div>
@@ -63,9 +63,9 @@
         <button id="menuClose" class="mobile-menu-button" type="button" aria-label="Close menu">✕</button>
       </div>
       <div class="mobile-sheet-actions">
-        <button class="sheet-action" data-scroll-target="captureSection" type="button">Quick Capture</button>
-        <button class="sheet-action" data-scroll-target="boardSection" type="button">Task Board</button>
-        <button class="sheet-action" data-scroll-target="downloadSection" type="button">Download APK</button>
+        <button class="sheet-action" data-screen="home" type="button">Overview</button>
+        <button class="sheet-action" data-screen="capture" type="button">Add Task</button>
+        <button class="sheet-action" data-screen="board" type="button">Board</button>
         <button class="sheet-action" id="sheetThemeToggle" type="button">Toggle Theme</button>
       </div>
     </aside>
@@ -75,14 +75,14 @@
     <div class="ambient ambient-two"></div>
     <div class="ambient ambient-three"></div>
 
-    <header class="hero" id="homeSection">
+    <header class="hero app-screen active-screen" id="homeSection" data-screen="home">
       <section class="hero-lead reveal reveal-up">
         <div class="brand-row">
           <div class="brand-mark" aria-hidden="true">
-            <span class="brand-glyph">TL</span>
+            <span class="brand-glyph">TM</span>
           </div>
           <div class="brand-copy">
-            <p class="eyebrow">Task Manager Luxe</p>
+            <p class="eyebrow">Task Manager</p>
             <span class="brand-note">Priority planner</span>
           </div>
         </div>
@@ -94,7 +94,7 @@
 
         <div class="hero-actions">
           <button id="addBtn" class="primary-button" type="button">Add Task</button>
-          <a class="download-button" href="downloads/task-manager-luxe.apk" download="task-manager-luxe.apk">Download APK</a>
+          <a class="download-button download-cta" href="downloads/task-manager.apk" download="task-manager.apk">Download APK</a>
           <button id="themeToggle" class="ghost-button" type="button">Light Mode</button>
         </div>
 
@@ -155,7 +155,7 @@
     </header>
 
     <main class="workspace">
-      <section class="composer glass-card reveal reveal-up" id="captureSection">
+      <section class="composer glass-card reveal reveal-up app-screen" id="captureSection" data-screen="capture">
         <div class="composer-heading">
           <div>
             <p class="section-kicker">Quick Capture</p>
@@ -188,7 +188,7 @@
         </div>
       </section>
 
-      <section class="toolbar reveal reveal-up">
+      <section class="toolbar reveal reveal-up app-screen board-toolbar" data-screen="board">
         <div class="filter-group glass-pill">
           <button class="filter-chip active" data-filter="all" type="button">All</button>
           <button class="filter-chip" data-filter="today" type="button">Today</button>
@@ -202,7 +202,7 @@
         </label>
       </section>
 
-      <section class="download-panel glass-card reveal reveal-up" id="downloadSection">
+      <section class="download-panel glass-card reveal reveal-up download-screen" id="downloadSection">
         <div>
           <p class="section-kicker">Android App</p>
           <h2>Get the APK</h2>
@@ -211,12 +211,12 @@
           </p>
         </div>
         <div class="download-actions">
-          <a class="download-button large" href="downloads/task-manager-luxe.apk" download="task-manager-luxe.apk">Download APK</a>
-          <span class="download-hint">File name: `task-manager-luxe.apk`</span>
+          <a class="download-button large download-cta" href="downloads/task-manager.apk" download="task-manager.apk">Download APK</a>
+          <span class="download-hint">File name: `task-manager.apk`</span>
         </div>
       </section>
 
-      <section class="board reveal reveal-up" id="boardSection">
+      <section class="board reveal reveal-up app-screen" id="boardSection" data-screen="board">
         <article class="matrix-card glass-card accent-rose" data-box="iu">
           <div class="lane-ribbon"></div>
           <div class="section-head">
@@ -293,10 +293,10 @@
   </div>
 
   <nav class="mobile-bottom-nav">
-    <button class="mobile-nav-item" data-scroll-target="homeSection" type="button">Home</button>
-    <button class="mobile-nav-item" data-scroll-target="captureSection" type="button">Add</button>
-    <button class="mobile-nav-item" data-scroll-target="boardSection" type="button">Board</button>
-    <button class="mobile-nav-item" data-scroll-target="downloadSection" type="button">APK</button>
+    <button class="mobile-nav-item is-active" data-screen="home" type="button">Home</button>
+    <button class="mobile-nav-item" data-screen="capture" type="button">Add</button>
+    <button class="mobile-nav-item" data-screen="board" type="button">Board</button>
+    <button class="mobile-nav-item" data-screen="board" type="button">Tasks</button>
   </nav>
 
   <div id="menu" class="task-menu hidden"></div>

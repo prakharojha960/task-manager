@@ -1031,16 +1031,32 @@ select:focus {
     box-shadow: var(--shadow);
   }
 
-  .mobile-nav-item {
-    padding: 12px 8px;
-    color: var(--text);
-    background: transparent;
-    border-radius: 16px;
-  }
+.mobile-nav-item {
+  padding: 12px 8px;
+  color: var(--text);
+  background: transparent;
+  border-radius: 16px;
+}
+
+.mobile-nav-item.is-active,
+.sheet-action.is-active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.16);
+}
 
   .hero {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .app-screen,
+  .board-toolbar {
+    display: none;
+  }
+
+  .app-screen.active-screen,
+  .board-toolbar.active-screen {
+    display: block;
   }
 
   .hero-lead {
@@ -1076,7 +1092,6 @@ select:focus {
   .aside-topline,
   .composer-heading,
   .section-head,
-  .toolbar,
   .download-panel,
   .task-footer {
     flex-direction: column;
@@ -1096,4 +1111,9 @@ select:focus {
   .download-button.large {
     width: 100%;
   }
+}
+
+body.app-runtime .download-screen,
+body.app-runtime .download-cta {
+  display: none !important;
 }

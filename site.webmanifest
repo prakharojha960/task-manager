@@ -1,7 +1,7 @@
 {
-  "name": "Task Manager Luxe",
-  "short_name": "TMLuxe",
-  "description": "Premium priority planning with matrix workflows, deadline tracking, and APK download.",
+  "name": "Task Manager",
+  "short_name": "TaskMgr",
+  "description": "Priority planning with matrix workflows, deadline tracking, and APK download.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#130d16",
