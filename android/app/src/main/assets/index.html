@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Task Manager APK Download | Priority Planner</title>
   <meta name="description" content="Download Task Manager, an Eisenhower matrix planner with deadline tracking, drag-and-drop prioritization, and a polished mobile-first dashboard.">
   <meta name="keywords" content="task manager apk, task manager, priority planner apk, eisenhower matrix app, productivity app download">
   <meta name="theme-color" content="#f1c27d">
   <meta name="application-name" content="Task Manager">
   <meta property="og:title" content="Task Manager APK Download">
-  <meta property="og:description" content="Task planning with an elegant dashboard, matrix prioritization, and Android APK download.">
+  <meta property="og:description" content="Task planning with a refined dashboard, matrix prioritization, and Android APK download.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/task-manager-luxe-icon.svg" type="image/svg+xml">
   <link rel="manifest" href="site.webmanifest">
@@ -34,7 +34,7 @@
         <span class="brand-glyph">TM</span>
       </div>
       <p class="splash-eyebrow">Task Manager</p>
-      <h1 class="splash-title">Plan beautifully. Focus clearly.</h1>
+      <h1 class="splash-title">Plan clearly. Move faster.</h1>
       <div class="splash-loader"><span></span></div>
     </div>
   </div>
@@ -66,6 +66,7 @@
         <button class="sheet-action" data-screen="home" type="button">Overview</button>
         <button class="sheet-action" data-screen="capture" type="button">Add Task</button>
         <button class="sheet-action" data-screen="board" type="button">Board</button>
+        <button class="sheet-action" data-screen="tasks" type="button">Tasks</button>
         <button class="sheet-action" id="sheetThemeToggle" type="button">Toggle Theme</button>
       </div>
     </aside>
@@ -87,9 +88,9 @@
           </div>
         </div>
 
-        <h2 class="hero-title">Organize work with clarity, elegance, and calm focus.</h2>
+        <h2 class="hero-title">Organize work with clarity and calm focus.</h2>
         <p class="hero-text">
-          A refined task manager built around the Eisenhower matrix, deadlines, and effortless drag-and-drop planning.
+          Built around the Eisenhower matrix, deadlines, and smooth task movement.
         </p>
 
         <div class="hero-actions">
@@ -289,6 +290,16 @@
           <div class="task-lane" id="done"></div>
         </article>
       </section>
+
+      <section class="task-feed glass-card reveal reveal-up app-screen" id="tasksSection" data-screen="tasks">
+        <div class="composer-heading">
+          <div>
+            <p class="section-kicker">All Tasks</p>
+            <h2>Your task feed</h2>
+          </div>
+        </div>
+        <div class="task-feed-list" id="allTasks"></div>
+      </section>
     </main>
   </div>
 
@@ -296,7 +307,7 @@
     <button class="mobile-nav-item is-active" data-screen="home" type="button">Home</button>
     <button class="mobile-nav-item" data-screen="capture" type="button">Add</button>
     <button class="mobile-nav-item" data-screen="board" type="button">Board</button>
-    <button class="mobile-nav-item" data-screen="board" type="button">Tasks</button>
+    <button class="mobile-nav-item" data-screen="tasks" type="button">Tasks</button>
   </nav>
 
   <div id="menu" class="task-menu hidden"></div>

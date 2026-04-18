@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&display=swap");
 
 :root {
+  /* Injected by Android at runtime; env() fallback for iOS PWA */
+  --android-safe-top: env(safe-area-inset-top, 0px);
+  --android-safe-bottom: env(safe-area-inset-bottom, 0px);
   --bg: #2a1020;
   --bg-top: #5a1f39;
   --panel: rgba(63, 24, 46, 0.62);
@@ -17,15 +20,32 @@
   --shadow: 0 30px 90px rgba(7, 3, 8, 0.42);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html,
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
 body {
   margin: 0;
-  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
 }
+
+/* Allow selection only inside inputs */
+input, select, textarea { -webkit-user-select: auto; user-select: auto; }
 
 body {
   font-family: "Manrope", sans-serif;
@@ -87,6 +107,7 @@ a {
 .app-shell {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   padding: 26px 20px 44px;
 }
@@ -856,12 +877,19 @@ select:focus {
 
 .notify-stack {
   position: fixed;
-  top: 18px;
+  top: calc(18px + var(--android-safe-top));
   right: 18px;
   z-index: 60;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.task-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
 }
 
 .note {
@@ -901,11 +929,16 @@ select:focus {
 
 @media (max-width: 720px) {
   body {
-    padding-bottom: 88px;
+    padding-bottom: calc(88px + var(--android-safe-bottom));
   }
 
   .app-shell {
-    padding: 80px 14px 24px;
+    /* Push content below the fixed topbar (topbar ~74px + safe-top) */
+    padding: calc(74px + var(--android-safe-top)) 14px calc(24px + var(--android-safe-bottom));
+    /* Enable smooth native-like scrolling per screen */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
   }
 
   .floating-download {
@@ -922,9 +955,11 @@ select:focus {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 14px;
-    background: rgba(30, 16, 28, 0.84);
-    backdrop-filter: blur(18px);
+    /* safe-top pushes the topbar content below the Android status bar */
+    padding: calc(12px + var(--android-safe-top)) 14px 14px;
+    background: rgba(30, 16, 28, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-bottom: 1px solid var(--line);
   }
 
@@ -967,7 +1002,7 @@ select:focus {
     position: fixed;
     left: 14px;
     right: 14px;
-    bottom: 96px;
+    bottom: calc(96px + var(--android-safe-bottom));
     z-index: 97;
     display: block;
     padding: 18px;
@@ -1016,33 +1051,39 @@ select:focus {
 
   .mobile-bottom-nav {
     position: fixed;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 95;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    padding: 8px;
-    border-radius: 24px;
-    background: rgba(30, 16, 28, 0.88);
-    border: 1px solid var(--line);
-    backdrop-filter: blur(18px);
-    box-shadow: var(--shadow);
+    gap: 4px;
+    padding: 6px 10px calc(6px + var(--android-safe-bottom));
+    background: rgba(30, 16, 28, 0.94);
+    border-top: 1px solid var(--line);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
   }
 
-.mobile-nav-item {
-  padding: 12px 8px;
-  color: var(--text);
-  background: transparent;
-  border-radius: 16px;
-}
+  .mobile-nav-item {
+    padding: 10px 8px;
+    color: var(--muted);
+    background: transparent;
+    border-radius: 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 0.2s, background 0.2s;
+  }
 
-.mobile-nav-item.is-active,
-.sheet-action.is-active {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.16);
-}
+  .mobile-nav-item.is-active {
+    color: var(--champagne);
+    background: rgba(255, 208, 137, 0.1);
+  }
+
+  .sheet-action.is-active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.16);
+  }
 
   .hero {
     grid-template-columns: 1fr;
@@ -1060,21 +1101,22 @@ select:focus {
   }
 
   .hero-lead {
-    padding-top: 4px;
+    padding: 0;
   }
 
   .hero-title {
-    font-size: clamp(2.25rem, 12vw, 3.3rem);
-    line-height: 0.95;
+    margin-top: 16px;
+    font-size: clamp(1.9rem, 9vw, 2.6rem);
+    line-height: 0.98;
   }
 
   .hero-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .hero-actions .ghost-button {
-    grid-column: span 2;
+    grid-column: auto;
   }
 
   .hero-metrics {
@@ -1087,6 +1129,22 @@ select:focus {
 
   .metric-card strong {
     font-size: 1.8rem;
+  }
+
+  .hero-text,
+  .hero-aside,
+  .brand-note {
+    display: none;
+  }
+
+  .brand-row {
+    gap: 12px;
+  }
+
+  .brand-mark {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
   }
 
   .aside-topline,
@@ -1110,6 +1168,26 @@ select:focus {
   .filter-group,
   .download-button.large {
     width: 100%;
+  }
+}
+
+/* Light mode tweaks for mobile chrome */
+@media (max-width: 720px) {
+  body.theme-light .mobile-topbar {
+    background: rgba(251, 244, 236, 0.92);
+  }
+
+  body.theme-light .mobile-bottom-nav {
+    background: rgba(251, 244, 236, 0.94);
+  }
+
+  body.theme-light .mobile-sheet {
+    background: rgba(255, 250, 244, 0.96);
+  }
+
+  body.theme-light .mobile-nav-item.is-active {
+    color: var(--champagne);
+    background: rgba(185, 135, 66, 0.1);
   }
 }
 

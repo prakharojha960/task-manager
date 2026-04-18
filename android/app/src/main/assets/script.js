@@ -38,7 +38,8 @@ const els = {
   activeCount: document.getElementById("activeCount"),
   todayCount: document.getElementById("todayCount"),
   overdueCount: document.getElementById("overdueCount"),
-  doneCount: document.getElementById("doneCount")
+  doneCount: document.getElementById("doneCount"),
+  allTasks: document.getElementById("allTasks")
 };
 
 function loadTasks() {
@@ -357,6 +358,17 @@ function render() {
     const count = tasks.filter((task) => task.box === box).length;
     document.getElementById(`count-${box}`).textContent = String(count);
   });
+
+  if (els.allTasks) {
+    els.allTasks.innerHTML = "";
+    const taskFeed = visibleTasks.filter((task) => !task.done);
+
+    if (taskFeed.length === 0) {
+      renderEmptyState(els.allTasks, "No active tasks yet.");
+    } else {
+      taskFeed.forEach((task) => els.allTasks.appendChild(createTaskCard(task)));
+    }
+  }
 }
 
 function addTask() {
@@ -507,13 +519,25 @@ function closeMobileMenu() {
 function setActiveScreen(screen) {
   activeScreen = screen;
 
-  document.querySelectorAll(".app-screen").forEach((section) => {
+  // Toggle screen visibility — skip the toolbar (handled separately below)
+  document.querySelectorAll(".app-screen:not(.board-toolbar)").forEach((section) => {
     section.classList.toggle("active-screen", section.dataset.screen === screen);
   });
 
-  document.querySelectorAll(".mobile-nav-item[data-screen], .sheet-action[data-screen]").forEach((button) => {
+  // Highlight matching nav buttons — only consider the exact screen match
+  document.querySelectorAll(".mobile-nav-item[data-screen]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.screen === screen);
   });
+
+  document.querySelectorAll(".sheet-action[data-screen]").forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.screen === screen);
+  });
+
+  // The filter/search toolbar is shared by both Board and Tasks screens
+  const boardToolbar = document.querySelector(".board-toolbar");
+  if (boardToolbar) {
+    boardToolbar.classList.toggle("active-screen", screen === "board" || screen === "tasks");
+  }
 }
 
 function applyRuntimeMode() {
